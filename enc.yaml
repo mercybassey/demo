@@ -1,0 +1,11 @@
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources: #specifies the lists of resources that should be encrypted
+  - resources:
+      - secrets #specifies that secrets should be encrypted
+    providers: #specifies a list of encryption providers that should be used to encrypt the specified resources
+      - aescbc: #This provider uses the Advanced Encryption Standard (AES) in Cipher-Block Chaining (CBC) mode to encrypt the data.
+          keys: #field specifies a list of keys that should be used to encrypt the data. In this case, it is specifying a single key named key, with a secret value of "YOUR_CUSTOMER_KEY".
+            - name: key
+              secret: "YOUR_CUSTOMER_KEY"
+      - identity: {} #This provider is an identity transform, meaning that it does not encrypt the data. When set as the first provider, the resource will be decrypted as new values are written 
